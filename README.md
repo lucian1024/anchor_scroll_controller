@@ -5,7 +5,12 @@ This package implement a ScrollController which supports anchor. That is,  Ancho
 ## Features
 
 - Scroll to index
+
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/docs/images/scroll_to_index.gif)
+
 - Listen to index changed
+
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/docs/images/on_index_changed.gif)
 
 ## Getting Started
 
@@ -24,7 +29,7 @@ import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
 import 'package:anchor_scroll_controller/anchor_scroll_wrapper.dart';
 ```
 
-Initialize an AnchorScollController object and use it as the ScrollController of ListView, and wrap the items in the ListView with AnchorItemWrapper
+Initialize an AnchorScrollController object and use it as the ScrollController of ListView, and wrap the items in the ListView with AnchorItemWrapper
 
 ```dart
 late final AnchorScrollController _scrollController;
