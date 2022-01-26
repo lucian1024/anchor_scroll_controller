@@ -1,58 +1,63 @@
 
 import 'dart:math';
 
-import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
 import 'package:anchor_scroll_controller/anchor_scroll_wrapper.dart';
 import 'package:flutter/material.dart';
 
-class GeneralScrollViewWidget extends StatefulWidget {
-  const GeneralScrollViewWidget();
+class CascadesScrollControllerWidget extends StatefulWidget {
+  const CascadesScrollControllerWidget(this.scrollController);
+  final ScrollController scrollController;
 
   @override
   State<StatefulWidget> createState() {
-    return _GeneralScrollViewWidgetState();
+    return _CascadesScrollControllerWidgetState();
   }
 }
 
-class _GeneralScrollViewWidgetState extends State<GeneralScrollViewWidget> {
-  late final AnchorScrollController _scrollController;
+class _CascadesScrollControllerWidgetState extends State<CascadesScrollControllerWidget> {
+  late final AnchorScrollViewWrapper _scrollViewWrapper;
   TabController? _tabController;
   final int length = 100;
 
   @override
   void initState() {
     super.initState();
+  }
 
-    _scrollController = AnchorScrollController(
-      onIndexChanged: (index) {
-        _tabController?.animateTo(index);
-      },
-    );
+  void _onIndexChanged(index) {
+  _tabController?.animateTo(index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("GeneralScrollViewWidget"),
+          title: Text("GeneralScrollView"),
         ),
         body: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: length,
-                  itemBuilder: (context, index) => AnchorItemWrapper(
-                    index: index,
-                    controller: _scrollController,
-                    child: Container(
-                      height: 50.0 + Random().nextInt(50),
-                      color: Colors.primaries[index % Colors.primaries.length],
-                      alignment: Alignment.center,
-                      child: Text(index.toString(),
-                          style: const TextStyle(fontSize: 24, color: Colors.black)),
-                    ),
-                  )
+              child: AnchorScrollViewWrapper(
+                controller: widget.scrollController,
+                onIndexChanged: _onIndexChanged,
+                child: Builder(
+                  builder:(context) {
+                    _scrollViewWrapper = AnchorScrollViewWrapper.of(context)!;
+                    return ListView.builder(
+                      itemCount: length,
+                      itemBuilder: (context, index) => AnchorItemWrapper(
+                        index: index,
+                        scrollViewWrapper: _scrollViewWrapper,
+                        child: Container(
+                          height: 50.0 + Random().nextInt(50),
+                          color: Colors.primaries[index % Colors.primaries.length],
+                          alignment: Alignment.center,
+                          child: Text(index.toString(),
+                              style: const TextStyle(fontSize: 24, color: Colors.black)),
+                        ),
+                      )
+                  );}
+                ),
               ),
             ),
             Container(
@@ -87,7 +92,7 @@ class _GeneralScrollViewWidgetState extends State<GeneralScrollViewWidget> {
                             borderRadius: BorderRadius.all(Radius.circular(15)),
                           ),
                           onTap: (index) {
-                            _scrollController.scrollToIndex(index: index);
+                            _scrollViewWrapper.scrollToIndex(index: index);
                           }
                       );
                     }

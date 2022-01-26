@@ -1,6 +1,8 @@
+import 'package:example/cascaded_scroll_controller.dart';
 import 'package:example/pin_scroll_view.dart';
 import 'package:example/general_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 void main() {
   runApp(MyApp());
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage>{
                   return GeneralScrollViewWidget();
                 }));
               },
-              child: Text("GeneralScrollViewWidget"),
+              child: Text("GeneralScrollView"),
             ),
           ),
           SizedBox(height: 20,),
@@ -95,6 +97,20 @@ class _MyHomePageState extends State<MyHomePage>{
                 }));
               },
               child: Text("PinScrollView"),
+            ),
+          ),
+          SizedBox(height: 20,),
+          Center(
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+              ),
+              onPressed: () {
+                showMaterialModalBottomSheet(context: context, builder: (context) => CascadesScrollControllerWidget(ModalScrollController.of(context)!));
+              },
+              child: Text("CascadedScrollView"),
             ),
           ),
         ],

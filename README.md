@@ -60,7 +60,6 @@ Widget build(BuildContext context) {
             controller: _scrollController,
             itemCount: length,
             itemBuilder: (context, index) => AnchorItemWrapper(
-              key: ValueKey(index),
               index: index,
               controller: _scrollController,
               child: Container(
@@ -84,5 +83,9 @@ Widget build(BuildContext context) {
   ...
 ```
 
+## Additional notes
 
+- If the size of items are fixed, there is no need to wrap item with AnchorItemWrapper. Just set the ```fixedItemSize``` param of AnchorScrollController  to the size of items. For example, if the height of all items are 50, then set ```fixedItemSize``` param to 50.
+- For the ScrollView which needs to support pin, wrap pinned headers with AnchorItemWrapper. See [pin_scroll_view.dart](https://github.com/lucian1024/anchor_scroll_view/blob/main/example/lib/pin_scroll_view.dart) for more detail.
+- If you already have a ScrollController and want to use it, wrap the ListView with AnchorScrollViewWrapper and wrap its items with AnchorItemWrapper. Meanwhile, set the ```scrollViewWrapper``` param instead of ```controller``` param to AnchorItemWrapper. See [cascaded_scroll_controller.dart](https://github.com/lucian1024/anchor_scroll_view/blob/main/example/lib/cascaded_scroll_controller.dart) for more detail.
 
