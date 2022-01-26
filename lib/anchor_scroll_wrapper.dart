@@ -22,7 +22,6 @@ class AnchorItemWrapper extends StatefulWidget {
 }
 
 class AnchorItemWrapperState extends State<AnchorItemWrapper> {
-
   @override
   void initState() {
     super.initState();
@@ -38,8 +37,7 @@ class AnchorItemWrapperState extends State<AnchorItemWrapper> {
   @override
   void didUpdateWidget(AnchorItemWrapper oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.index != widget.index ||
-        oldWidget.key != widget.key) {
+    if (oldWidget.index != widget.index || oldWidget.key != widget.key) {
       _removeItem(oldWidget.index);
       _addItem(widget.index);
     }

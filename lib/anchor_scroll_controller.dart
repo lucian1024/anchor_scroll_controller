@@ -13,14 +13,12 @@ class AnchorScrollController extends ScrollController {
     String? debugLabel,
     ValueChanged<int>? onIndexChanged,
     double? fixedItemSize,
-  }) :
-    _onIndexChanged = onIndexChanged,
-    _fixedItemSize = fixedItemSize,
-    super(
-      initialScrollOffset: initialScrollOffset,
-      keepScrollOffset: keepScrollOffset,
-      debugLabel: debugLabel
-    );
+  })  : _onIndexChanged = onIndexChanged,
+        _fixedItemSize = fixedItemSize,
+        super(
+            initialScrollOffset: initialScrollOffset,
+            keepScrollOffset: keepScrollOffset,
+            debugLabel: debugLabel);
 
   /// The fixed item size
   /// If the [ScrollView] scrolls along vertical, it should be the fixed height of the item
@@ -28,7 +26,8 @@ class AnchorScrollController extends ScrollController {
   final double? _fixedItemSize;
 
   /// The map which stores the states of the current items in the viewport
-  final Map<int, AnchorItemWrapperState> _itemMap = <int, AnchorItemWrapperState>{};
+  final Map<int, AnchorItemWrapperState> _itemMap =
+      <int, AnchorItemWrapperState>{};
 
   void addItem(int index, AnchorItemWrapperState state) {
     _itemMap[index] = state;
@@ -41,14 +40,17 @@ class AnchorScrollController extends ScrollController {
   /// current index
   int _currIndex = 0;
   int get currIndex => _currIndex;
+
   /// callback when current index changed
   ValueChanged<int>? _onIndexChanged;
 
   @override
   void notifyListeners() {
     // if the scroll behavior is triggered by user, notify index changed
-    if (hasClients && positions.first.userScrollDirection != ScrollDirection.idle
-      && offset > positions.first.minScrollExtent && offset < positions.first.maxScrollExtent) {
+    if (hasClients &&
+        positions.first.userScrollDirection != ScrollDirection.idle &&
+        offset > positions.first.minScrollExtent &&
+        offset < positions.first.maxScrollExtent) {
       final index = _getCurrIndex();
       if (index != _currIndex) {
         _currIndex = index;
@@ -67,8 +69,8 @@ class AnchorScrollController extends ScrollController {
         continue;
       }
 
-      if (revealedOffset.offset <= offset
-          && revealedOffset.offset + revealedOffset.rect.height > offset) {
+      if (revealedOffset.offset <= offset &&
+          revealedOffset.offset + revealedOffset.rect.height > offset) {
         tmpIndex = index;
         break;
       }
@@ -94,11 +96,10 @@ class AnchorScrollController extends ScrollController {
   /// @param index: the target index item to scroll to
   /// @param scrollSpeed: the scroll speed in unit offset/millisecond
   /// @param curve: the scroll animation
-  Future<void> scrollToIndex({
-    required int index,
-    double scrollSpeed = 2,
-    Curve curve = Curves.linear
-  }) async {
+  Future<void> scrollToIndex(
+      {required int index,
+      double scrollSpeed = 2,
+      Curve curve = Curves.linear}) async {
     assert(scrollSpeed > 0);
 
     if (!hasClients) {
@@ -116,7 +117,8 @@ class AnchorScrollController extends ScrollController {
       // or whenever the animation reaches the edge of the viewport and attempts to overscroll.
       // So, create a new scroll behavior to stop the last one.
       // Maybe there is a better way to do this.
-      await animateTo(offset, duration: Duration(milliseconds: 1), curve: curve);
+      await animateTo(offset,
+          duration: Duration(milliseconds: 1), curve: curve);
       _currIndex = _getCurrIndex();
     }
 
@@ -125,7 +127,8 @@ class AnchorScrollController extends ScrollController {
     if (_fixedItemSize != null) {
       // if the item size is fixed, the target offset is index * fixedItemSize
       final targetOffset = index * _fixedItemSize!;
-      final int scrollTime = ((offset - targetOffset).abs() / scrollSpeed).round();
+      final int scrollTime =
+          ((offset - targetOffset).abs() / scrollSpeed).round();
       final Duration duration = Duration(milliseconds: scrollTime);
       await animateTo(targetOffset, duration: duration, curve: curve);
     } else {
@@ -139,11 +142,13 @@ class AnchorScrollController extends ScrollController {
         await _animateToIndexInViewport(index, scrollSpeed, curve);
       } else {
         int tmpIndex = _currIndex;
-        while(!_itemMap.containsKey(index)) {
-          final sortedKeys = _itemMap.keys.toList()..sort((first, second) => first.compareTo(second));
+        while (!_itemMap.containsKey(index)) {
+          final sortedKeys = _itemMap.keys.toList()
+            ..sort((first, second) => first.compareTo(second));
           tmpIndex = (tmpIndex < index) ? sortedKeys.last : sortedKeys.first;
           double alignment = (tmpIndex < index) ? 1 : 0;
-          await _animateToIndexInViewport(tmpIndex, scrollSpeed, curve, alignment: alignment);
+          await _animateToIndexInViewport(tmpIndex, scrollSpeed, curve,
+              alignment: alignment);
           if (!_isScrollingToIndex) {
             // this scrolling is interrupted
             return;
@@ -167,7 +172,9 @@ class AnchorScrollController extends ScrollController {
   }
 
   /// Scroll to the index item which is already in the viewport
-  Future<void> _animateToIndexInViewport(int index, double scrollSpeed, Curve curve, {double alignment = 0}) async {
+  Future<void> _animateToIndexInViewport(
+      int index, double scrollSpeed, Curve curve,
+      {double alignment = 0}) async {
     final double? targetOffset = _getScrollOffset(index, alignment: alignment);
     if (targetOffset == null) {
       return;
@@ -185,8 +192,8 @@ class AnchorScrollController extends ScrollController {
       return null;
     }
 
-    return revealOffset.offset.clamp(positions.first.minScrollExtent,
-        positions.first.maxScrollExtent);
+    return revealOffset.offset.clamp(
+        positions.first.minScrollExtent, positions.first.maxScrollExtent);
   }
 
   /// Get the [RevealedOffset] to reveal the target index
@@ -205,4 +212,3 @@ class AnchorScrollController extends ScrollController {
     return offset;
   }
 }
-

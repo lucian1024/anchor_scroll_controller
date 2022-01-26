@@ -1,16 +1,18 @@
-# flutter anchor_scroll_view
+# flutter anchor_scroll_controller
 
 This package implement a ScrollController which supports anchor. That is,  AnchorScrollController supports to scroll to index and listen to index changed while scrolling by user.
+
+[![Pub](https://img.shields.io/pub/v/anchor_scroll_controller.svg?logo=flutter&color=blue&style=flat-square)](https://pub.dev/packages/anchor_scroll_controller)
 
 ## Features
 
 - Scroll to index
 
-  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/docs/images/scroll_to_index.gif)
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/doc/images/scroll_to_index.gif)
 
 - Listen to index changed
 
-  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/docs/images/on_index_changed.gif)
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/doc/images/on_index_changed.gif)
 
 ## Getting Started
 
@@ -75,6 +77,11 @@ Widget build(BuildContext context) {
       ],
     )
   );
+  
+  ...
+  // call AnchorScrollController.scrollToIndex() to scroll to the target index item
+  _scrollController.scrollToIndex(index);
+  ...
 ```
 
 
