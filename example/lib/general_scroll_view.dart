@@ -24,8 +24,10 @@ class _GeneralScrollViewWidgetState extends State<GeneralScrollViewWidget> {
     super.initState();
 
     _scrollController = AnchorScrollController(
-      onIndexChanged: (index) {
-        _tabController?.animateTo(index);
+      onIndexChanged: (index, userScroll) {
+        if (userScroll) {
+          _tabController?.animateTo(index);
+        }
       },
     );
   }

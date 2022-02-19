@@ -23,8 +23,10 @@ class _PinScrollViewWidgetState extends State<PinScrollViewWidget> {
   void initState() {
     super.initState();
     _scrollController = AnchorScrollController(
-      onIndexChanged: (index) {
-        _tabController?.animateTo(index);
+      onIndexChanged: (index, userScroll) {
+        if (userScroll) {
+          _tabController?.animateTo(index);
+        }
       }
     );
   }

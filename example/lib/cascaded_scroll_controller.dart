@@ -24,8 +24,10 @@ class _CascadesScrollControllerWidgetState extends State<CascadesScrollControlle
     super.initState();
   }
 
-  void _onIndexChanged(index) {
-  _tabController?.animateTo(index);
+  void _onIndexChanged(index, userScroll) {
+    if (userScroll) {
+      _tabController?.animateTo(index);
+    }
   }
 
   @override

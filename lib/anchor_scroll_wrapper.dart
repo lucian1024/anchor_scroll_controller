@@ -84,7 +84,7 @@ class AnchorScrollViewWrapper extends InheritedWidget
 
   final double? fixedItemSize;
 
-  final ValueChanged<int>? onIndexChanged;
+  final IndexChanged? onIndexChanged;
 
   static AnchorScrollViewWrapper? of(BuildContext context) {
     return context

@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 
 import 'anchor_scroll_wrapper.dart';
 
+typedef IndexChanged = void Function(int index, bool userScroll);
+
 mixin AnchorScrollControllerMixin {
   /// The fixed item size
   /// If the [ScrollView] scrolls along vertical, it should be the fixed height of the item
@@ -28,13 +30,12 @@ mixin AnchorScrollControllerMixin {
   int get currIndex => _currIndex;
 
   /// callback when current index changed
-  late final ValueChanged<int>? onIndexChanged;
+  late final IndexChanged? onIndexChanged;
 
   double _lastOffset = 0;
   void notifyIndexChanged(ScrollController controller) {
     // if the scroll behavior is triggered by user, notify index changed
     if (controller.hasClients &&
-        controller.position.userScrollDirection != ScrollDirection.idle &&
         controller.offset >= controller.position.minScrollExtent) {
       if (controller.offset < controller.position.maxScrollExtent ||
           (controller.offset == controller.position.maxScrollExtent &&
@@ -42,7 +43,8 @@ mixin AnchorScrollControllerMixin {
         final index = _getCurrIndex(controller);
         if (index != _currIndex) {
           _currIndex = index;
-          onIndexChanged?.call(_currIndex);
+          onIndexChanged?.call(_currIndex,
+              controller.position.userScrollDirection != ScrollDirection.idle);
         }
       }
     }
@@ -260,7 +262,7 @@ class AnchorScrollController extends ScrollController
 
   final double? fixedItemSize;
 
-  final ValueChanged<int>? onIndexChanged;
+  final IndexChanged? onIndexChanged;
 
   @override
   void notifyListeners() {
