@@ -8,11 +8,11 @@ This package implement a ScrollController which supports anchor. That is,  Ancho
 
 - Scroll to index
 
-  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/doc/images/scroll_to_index.gif)
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_controller/blob/main/doc/images/scroll_to_index.gif)
 
 - Listen to index changed
 
-  ![Screenshot](https://github.com/lucian1024/anchor_scroll_view/blob/main/doc/images/on_index_changed.gif)
+  ![Screenshot](https://github.com/lucian1024/anchor_scroll_controller/blob/main/doc/images/on_index_changed.gif)
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  anchor_scroll_view: <latest_version>
+  anchor_scroll_controller: <latest_version>
 ```
 
 In your library add the following import:
@@ -86,6 +86,6 @@ Widget build(BuildContext context) {
 ## Additional notes
 
 - If the size of items are fixed, there is no need to wrap item with AnchorItemWrapper. Just set the ```fixedItemSize``` param of AnchorScrollController  to the size of items. For example, if the height of all items are 50, then set ```fixedItemSize``` param to 50.
-- For the ScrollView which needs to support pin, wrap pinned headers with AnchorItemWrapper. See [pin_scroll_view.dart](https://github.com/lucian1024/anchor_scroll_view/blob/main/example/lib/pin_scroll_view.dart) for more detail.
-- If you already have a ScrollController and want to use it, wrap the ListView with AnchorScrollViewWrapper and wrap its items with AnchorItemWrapper. Meanwhile, set the ```scrollViewWrapper``` param instead of ```controller``` param to AnchorItemWrapper. See [cascaded_scroll_controller.dart](https://github.com/lucian1024/anchor_scroll_view/blob/main/example/lib/cascaded_scroll_controller.dart) for more detail.
+- For the ScrollView which needs to support pin, wrap pinned headers with AnchorItemWrapper. See [pin_scroll_view.dart](https://github.com/lucian1024/anchor_scroll_controller/blob/main/example/lib/pin_scroll_view.dart) for more detail.
+- If you already have a ScrollController and want to use it, wrap the ListView with AnchorScrollViewWrapper and wrap its items with AnchorItemWrapper. Meanwhile, set the ```scrollViewWrapper``` param instead of ```controller``` param to AnchorItemWrapper. See [cascaded_scroll_controller.dart](https://github.com/lucian1024/anchor_scroll_controller/blob/main/example/lib/cascaded_scroll_controller.dart) for more detail.
 

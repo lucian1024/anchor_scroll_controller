@@ -10,3 +10,7 @@
 ## 0.3.0
 
 * `onIndexChanged` gets called regardless of how the index is changed and add a `userScroll` parameter for `onIndexChanged` to indicate whether is scrolling by user.
+
+## 0.3.1
+
+* Modify README.md
