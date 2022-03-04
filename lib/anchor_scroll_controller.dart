@@ -239,7 +239,7 @@ mixin AnchorScrollControllerMixin {
       final renderBox = context.findRenderObject();
       final viewport = RenderAbstractViewport.of(renderBox);
       if (renderBox != null && viewport != null) {
-        offset = viewport.getOffsetToReveal(renderBox, 0);
+        offset = viewport.getOffsetToReveal(renderBox, alignment);
       }
     }
 
