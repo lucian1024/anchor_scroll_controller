@@ -14,3 +14,7 @@
 ## 0.3.1
 
 * Modify README.md
+
+## 0.3.2
+
+* Fix [issue #2](https://github.com/lucian1024/anchor_scroll_controller/issues/2):  When the height of item is very large which leads to only one item is in the viewport, it will fall to infinite loop. 
