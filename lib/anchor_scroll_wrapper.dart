@@ -86,21 +86,40 @@ class AnchorScrollViewWrapper extends InheritedWidget
 
   final IndexChanged? onIndexChanged;
 
+  VoidCallback? _scrollListener;
+
   static AnchorScrollViewWrapper? of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<AnchorScrollViewWrapper>();
   }
 
   @override
-  bool updateShouldNotify(AnchorScrollViewWrapper oldWidget) =>
-      controller != oldWidget.controller;
+  bool updateShouldNotify(AnchorScrollViewWrapper oldWidget) {
+    oldWidget.removeScrollListener();
+    addScrollListener();
+    return false;
+  }
 
   @override
   InheritedElement createElement() {
-    controller.addListener(() {
-      notifyIndexChanged(controller);
-    });
+    addScrollListener();
     return super.createElement();
+  }
+
+  void addScrollListener() {
+    if (_scrollListener == null) {
+      _scrollListener = () {
+        notifyIndexChanged(controller);
+      };
+      controller.addListener(_scrollListener!);
+    }
+  }
+
+  void removeScrollListener() {
+    if (_scrollListener == null) {
+      return;
+    }
+    controller.removeListener(_scrollListener!);
   }
 
   Future<void> scrollToIndex(
