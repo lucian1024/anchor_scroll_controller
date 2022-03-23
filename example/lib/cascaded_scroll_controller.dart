@@ -34,7 +34,7 @@ class _CascadesScrollControllerWidgetState extends State<CascadesScrollControlle
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("GeneralScrollView"),
+          title: Text("CascadedScrollView"),
         ),
         body: Column(
           children: [
