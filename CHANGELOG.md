@@ -19,3 +19,8 @@
 
 * Fix [issue #2](https://github.com/lucian1024/anchor_scroll_controller/issues/2):  When the height of item is very large which leads to only one item is in the viewport, it will fall to infinite loop.
 * Bugfix: `onIndexChanged` will not call after AnchorScrollViewWrapper is update.
+
+## 0.4.0
+
+* Refactor project.
+* Bugfix: fix possible infinite loop problems.

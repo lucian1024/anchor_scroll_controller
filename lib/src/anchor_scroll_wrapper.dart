@@ -69,16 +69,22 @@ class AnchorItemWrapperState extends State<AnchorItemWrapper> {
   }
 }
 
-// ignore: must_be_immutable
-class AnchorScrollViewWrapper extends InheritedWidget
-    with AnchorScrollControllerMixin {
+class AnchorScrollViewWrapper extends InheritedWidget {
   AnchorScrollViewWrapper({
     required this.controller,
     required Widget child,
     this.fixedItemSize,
     this.onIndexChanged,
     Key? key,
-  }) : super(key: key, child: child);
+  }) : super(key: key, child: child) {
+    _helper = AnchorScrollControllerHelper(
+        scrollController: controller,
+        fixedItemSize: fixedItemSize,
+        onIndexChanged: onIndexChanged);
+    _scrollListener = () {
+      _helper.notifyIndexChanged();
+    };
+  }
 
   final ScrollController controller;
 
@@ -86,7 +92,17 @@ class AnchorScrollViewWrapper extends InheritedWidget
 
   final IndexChanged? onIndexChanged;
 
-  VoidCallback? _scrollListener;
+  late final AnchorScrollControllerHelper _helper;
+
+  late final VoidCallback _scrollListener;
+
+  void addItem(int index, AnchorItemWrapperState state) {
+    _helper.addItem(index, state);
+  }
+
+  void removeItem(int index) {
+    _helper.removeItem(index);
+  }
 
   static AnchorScrollViewWrapper? of(BuildContext context) {
     return context
@@ -95,42 +111,30 @@ class AnchorScrollViewWrapper extends InheritedWidget
 
   @override
   bool updateShouldNotify(AnchorScrollViewWrapper oldWidget) {
-    oldWidget.removeScrollListener();
-    addScrollListener();
+    oldWidget._removeScrollListener();
+    _addScrollListener();
     return false;
   }
 
   @override
   InheritedElement createElement() {
-    addScrollListener();
+    _addScrollListener();
     return super.createElement();
   }
 
-  void addScrollListener() {
-    if (_scrollListener == null) {
-      _scrollListener = () {
-        notifyIndexChanged(controller);
-      };
-      controller.addListener(_scrollListener!);
-    }
+  void _addScrollListener() {
+    controller.addListener(_scrollListener);
   }
 
-  void removeScrollListener() {
-    if (_scrollListener == null) {
-      return;
-    }
-    controller.removeListener(_scrollListener!);
+  void _removeScrollListener() {
+    controller.removeListener(_scrollListener);
   }
 
   Future<void> scrollToIndex(
       {required int index,
       double scrollSpeed = 2,
       Curve curve = Curves.linear}) async {
-    scrollToIndexWithScrollController(
-        controller: controller,
-        index: index,
-        scrollSpeed: scrollSpeed,
-        curve: curve);
+    _helper.scrollToIndex(index: index, scrollSpeed: scrollSpeed, curve: curve);
   }
 
   @override

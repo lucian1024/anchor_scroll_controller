@@ -28,7 +28,6 @@ In your library add the following import:
 
 ```dart
 import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
-import 'package:anchor_scroll_controller/anchor_scroll_wrapper.dart';
 ```
 
 Initialize an AnchorScrollController object and use it as the ScrollController of ListView, and wrap the items in the ListView with AnchorItemWrapper

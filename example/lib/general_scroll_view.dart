@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
-import 'package:anchor_scroll_controller/anchor_scroll_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class GeneralScrollViewWidget extends StatefulWidget {
