@@ -1,4 +1,5 @@
 import 'package:example/cascaded_scroll_controller.dart';
+import 'package:example/offset_scroll_view.dart';
 import 'package:example/pin_scroll_view.dart';
 import 'package:example/general_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +50,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>{
-
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -60,61 +60,93 @@ class _MyHomePageState extends State<MyHomePage>{
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return GeneralScrollViewWidget();
+                  }));
+                },
+                child: Text("GeneralScrollView"),
               ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return GeneralScrollViewWidget();
-                }));
-              },
-              child: Text("GeneralScrollView"),
             ),
-          ),
-          SizedBox(height: 20,),
-          Center(
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return PinScrollViewWidget();
+                  }));
+                },
+                child: Text("PinScrollView"),
               ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PinScrollViewWidget();
-                }));
-              },
-              child: Text("PinScrollView"),
             ),
-          ),
-          SizedBox(height: 20,),
-          Center(
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                ),
+                onPressed: () {
+                  showMaterialModalBottomSheet(
+                      context: context,
+                      builder: (context) => CascadesScrollControllerWidget(
+                          ModalScrollController.of(context)!));
+                },
+                child: Text("CascadedScrollView"),
               ),
-              onPressed: () {
-                showMaterialModalBottomSheet(context: context, builder: (context) => CascadesScrollControllerWidget(ModalScrollController.of(context)!));
-              },
-              child: Text("CascadedScrollView"),
             ),
-          ),
-        ],
-      )
-    );
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return OffsetScrollViewWidget();
+                  }));
+                },
+                child: Text("Scroll with offset"),
+              ),
+            ),
+          ],
+        ));
   }
 }

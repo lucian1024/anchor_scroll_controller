@@ -11,7 +11,8 @@ class AnchorScrollControllerHelper {
   AnchorScrollControllerHelper(
       {required this.scrollController,
       this.fixedItemSize,
-      this.onIndexChanged});
+      this.onIndexChanged,
+      this.anchorOffset});
 
   /// The [ScrollController] of the [ScrollView]
   final ScrollController scrollController;
@@ -20,6 +21,9 @@ class AnchorScrollControllerHelper {
   /// If the [ScrollView] scrolls along vertical, it should be the fixed height of the item
   /// If the [ScrollView] scrolls along horizontal, it should be the fixed width of the item
   final double? fixedItemSize;
+
+  /// The offset to apply to the top of each item
+  final double? anchorOffset;
 
   /// The map which stores the states of the current items in the viewport
   final Map<int, AnchorItemWrapperState> _itemMap = {};
@@ -73,9 +77,9 @@ class AnchorScrollControllerHelper {
         continue;
       }
 
-      if (revealedOffset.offset <= scrollController.offset &&
-          revealedOffset.offset + revealedOffset.rect.height >
-              scrollController.offset) {
+      final double totalOffset = _applyAnchorOffset(revealedOffset.offset);
+      if (totalOffset <= scrollController.offset &&
+          totalOffset + revealedOffset.rect.height > scrollController.offset) {
         tmpIndex = index;
         break;
       }
@@ -154,8 +158,10 @@ class AnchorScrollControllerHelper {
       // or whenever the animation reaches the edge of the viewport and attempts to overscroll.
       // So, create a new scroll behavior to stop the last one.
       // Maybe there is a better way to do this.
-      await scrollController.animateTo(scrollController.offset,
-          duration: Duration(milliseconds: 1), curve: curve);
+      await scrollController.animateTo(
+          _applyAnchorOffset(scrollController.offset),
+          duration: Duration(milliseconds: 1),
+          curve: curve);
       _currIndex = _getCurrIndex();
     }
 
@@ -163,7 +169,7 @@ class AnchorScrollControllerHelper {
 
     if (fixedItemSize != null) {
       // if the item size is fixed, the target offset is index * fixedItemSize
-      final targetOffset = index * fixedItemSize!;
+      final targetOffset = _applyAnchorOffset(index * fixedItemSize!);
       final int scrollTime =
           ((scrollController.offset - targetOffset).abs() / scrollSpeed)
               .round();
@@ -208,7 +214,7 @@ class AnchorScrollControllerHelper {
       final targetScrollOffset = _getScrollOffset(index);
       if (targetScrollOffset != null &&
           scrollController.offset != targetScrollOffset) {
-        scrollController.jumpTo(targetScrollOffset);
+        scrollController.jumpTo(_applyAnchorOffset(targetScrollOffset));
       }
 
       _currIndex = index;
@@ -225,10 +231,11 @@ class AnchorScrollControllerHelper {
       return;
     }
 
+    final double totalOffset = _applyAnchorOffset(targetOffset);
     final int scrollTime =
-        ((scrollController.offset - targetOffset).abs() / scrollSpeed).ceil();
+        ((scrollController.offset - totalOffset).abs() / scrollSpeed).ceil();
     final Duration duration = Duration(milliseconds: scrollTime);
-    await scrollController.animateTo(targetOffset,
+    await scrollController.animateTo(totalOffset,
         duration: duration, curve: curve);
   }
 
@@ -240,7 +247,7 @@ class AnchorScrollControllerHelper {
     }
 
     return revealOffset.offset.clamp(scrollController.position.minScrollExtent,
-        scrollController.position.maxScrollExtent);
+        scrollController.position.maxScrollExtent + (anchorOffset ?? 0));
   }
 
   /// Get the [RevealedOffset] to reveal the target index
@@ -258,6 +265,10 @@ class AnchorScrollControllerHelper {
 
     return offset;
   }
+
+  /// Apply the anchor offset to the scroll offset
+  double _applyAnchorOffset(double currentOffset) =>
+      currentOffset - (anchorOffset ?? 0);
 }
 
 class AnchorScrollController extends ScrollController {
@@ -267,6 +278,7 @@ class AnchorScrollController extends ScrollController {
     String? debugLabel,
     this.onIndexChanged,
     this.fixedItemSize,
+    this.anchorOffset,
   }) : super(
             initialScrollOffset: initialScrollOffset,
             keepScrollOffset: keepScrollOffset,
@@ -274,12 +286,15 @@ class AnchorScrollController extends ScrollController {
     _helper = AnchorScrollControllerHelper(
         scrollController: this,
         fixedItemSize: fixedItemSize,
-        onIndexChanged: onIndexChanged);
+        onIndexChanged: onIndexChanged,
+        anchorOffset: anchorOffset);
   }
 
   final double? fixedItemSize;
 
   final IndexChanged? onIndexChanged;
+
+  final double? anchorOffset;
 
   late final AnchorScrollControllerHelper _helper;
 
