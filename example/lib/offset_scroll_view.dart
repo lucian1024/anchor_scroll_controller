@@ -49,12 +49,10 @@ class _OffsetScrollViewWidgetState extends State<OffsetScrollViewWidget> {
                       controller: _scrollController,
                       child: Container(
                         height: 50.0 + Random().nextInt(50),
-                        color:
-                            Colors.primaries[index % Colors.primaries.length],
+                        color: Colors.primaries[index % Colors.primaries.length],
                         alignment: Alignment.center,
                         child: Text(index.toString(),
-                            style: const TextStyle(
-                                fontSize: 24, color: Colors.black)),
+                            style: const TextStyle(fontSize: 24, color: Colors.black)),
                       ),
                     )),
             Container(

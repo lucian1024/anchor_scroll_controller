@@ -78,9 +78,7 @@ class AnchorScrollViewWrapper extends InheritedWidget {
     Key? key,
   }) : super(key: key, child: child) {
     _helper = AnchorScrollControllerHelper(
-        scrollController: controller,
-        fixedItemSize: fixedItemSize,
-        onIndexChanged: onIndexChanged);
+        scrollController: controller, fixedItemSize: fixedItemSize, onIndexChanged: onIndexChanged);
     _scrollListener = () {
       _helper.notifyIndexChanged();
     };
@@ -105,8 +103,7 @@ class AnchorScrollViewWrapper extends InheritedWidget {
   }
 
   static AnchorScrollViewWrapper? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<AnchorScrollViewWrapper>();
+    return context.dependOnInheritedWidgetOfExactType<AnchorScrollViewWrapper>();
   }
 
   @override
@@ -131,17 +128,14 @@ class AnchorScrollViewWrapper extends InheritedWidget {
   }
 
   Future<void> scrollToIndex(
-      {required int index,
-      double scrollSpeed = 2,
-      Curve curve = Curves.linear}) async {
+      {required int index, double scrollSpeed = 2, Curve curve = Curves.linear}) async {
     _helper.scrollToIndex(index: index, scrollSpeed: scrollSpeed, curve: curve);
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<ScrollController>(
-        'controller', controller,
+    properties.add(DiagnosticsProperty<ScrollController>('controller', controller,
         ifNull: 'no controller', showName: false));
   }
 }

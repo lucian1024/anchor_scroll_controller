@@ -71,10 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                   fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
                 ),
                 onPressed: () {
@@ -91,10 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                   fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
                 ),
                 onPressed: () {
@@ -111,17 +107,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                   fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
                 ),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,
-                      builder: (context) => CascadesScrollControllerWidget(
-                          ModalScrollController.of(context)!));
+                      builder: (context) =>
+                          CascadesScrollControllerWidget(ModalScrollController.of(context)!));
                 },
                 child: Text("CascadedScrollView"),
               ),
@@ -132,10 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                   fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
                 ),
                 onPressed: () {
