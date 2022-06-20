@@ -24,3 +24,7 @@
 
 * Refactor project.
 * Bugfix: fix possible infinite loop problems.
+
+## 0.4.1
+
+* Added anchorOffset property to add some offset to each anchor

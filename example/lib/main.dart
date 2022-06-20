@@ -1,4 +1,5 @@
 import 'package:example/cascaded_scroll_controller.dart';
+import 'package:example/offset_scroll_view.dart';
 import 'package:example/pin_scroll_view.dart';
 import 'package:example/general_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,22 @@ class _MyHomePageState extends State<MyHomePage>{
                 showMaterialModalBottomSheet(context: context, builder: (context) => CascadesScrollControllerWidget(ModalScrollController.of(context)!));
               },
               child: Text("CascadedScrollView"),
+            ),
+          ),
+          SizedBox(height: 20,),
+          Center(
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                fixedSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OffsetScrollViewWidget();
+                }));
+              },
+              child: Text("Scroll with offset"),
             ),
           ),
         ],

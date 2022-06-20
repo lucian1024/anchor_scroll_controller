@@ -1,6 +1,6 @@
 name: anchor_scroll_controller
 description: This package implement a ScrollController which supports anchor. That is,  AnchorScrollController supports to scroll to index and listen to index changed while scrolling by user.
-version: 0.4.0
+version: 0.4.1
 homepage: https://github.com/lucian1024/anchor_scroll_controller
 
 environment:
