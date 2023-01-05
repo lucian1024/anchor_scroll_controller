@@ -76,13 +76,15 @@ class AnchorScrollViewWrapper extends InheritedWidget {
     this.fixedItemSize,
     this.onIndexChanged,
     this.anchorOffset,
+    double? pinGroupTitleOffset,
     Key? key,
   }) : super(key: key, child: child) {
     _helper = AnchorScrollControllerHelper(
         scrollController: controller,
         fixedItemSize: fixedItemSize,
         onIndexChanged: onIndexChanged,
-        anchorOffset: anchorOffset);
+        anchorOffset: anchorOffset,
+        pinGroupTitleOffset: pinGroupTitleOffset);
     _scrollListener = () {
       _helper.notifyIndexChanged();
     };

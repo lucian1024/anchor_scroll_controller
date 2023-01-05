@@ -10,9 +10,10 @@ typedef IndexChanged = void Function(int index, bool userScroll);
 class AnchorScrollControllerHelper {
   AnchorScrollControllerHelper(
       {required this.scrollController,
-      this.fixedItemSize,
-      this.onIndexChanged,
-      this.anchorOffset});
+        this.fixedItemSize,
+        this.onIndexChanged,
+        this.anchorOffset,
+        this.pinGroupTitleOffset});
 
   /// The [ScrollController] of the [ScrollView]
   final ScrollController scrollController;
@@ -24,6 +25,9 @@ class AnchorScrollControllerHelper {
 
   /// The offset to apply to the top of each item
   final double? anchorOffset;
+
+  /// The offset to apply to calculate current index
+  final double? pinGroupTitleOffset;
 
   /// The map which stores the states of the current items in the viewport
   final Map<int, AnchorItemWrapperState> _itemMap = {};
@@ -125,6 +129,15 @@ class AnchorScrollControllerHelper {
       tmpIndex = index;
     }
 
+    if(pinGroupTitleOffset != null) {
+      final nextIndex = tmpIndex + 1;
+      if (_itemMap.containsKey(nextIndex)) {
+        final RevealedOffset? revealedOffset = _getOffsetToReveal(nextIndex);
+        if (revealedOffset != null && (revealedOffset.offset - pinGroupTitleOffset!) < scrollController.offset) {
+          tmpIndex = nextIndex;
+        }
+      }
+    }
     return tmpIndex;
   }
 
@@ -279,6 +292,7 @@ class AnchorScrollController extends ScrollController {
     this.onIndexChanged,
     this.fixedItemSize,
     this.anchorOffset,
+    double? pinOffset,
   }) : super(
             initialScrollOffset: initialScrollOffset,
             keepScrollOffset: keepScrollOffset,
@@ -287,7 +301,8 @@ class AnchorScrollController extends ScrollController {
         scrollController: this,
         fixedItemSize: fixedItemSize,
         onIndexChanged: onIndexChanged,
-        anchorOffset: anchorOffset);
+        anchorOffset: anchorOffset,
+        pinGroupTitleOffset: pinOffset);
   }
 
   final double? fixedItemSize;
