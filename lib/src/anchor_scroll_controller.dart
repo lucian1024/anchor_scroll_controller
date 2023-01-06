@@ -10,10 +10,10 @@ typedef IndexChanged = void Function(int index, bool userScroll);
 class AnchorScrollControllerHelper {
   AnchorScrollControllerHelper(
       {required this.scrollController,
-        this.fixedItemSize,
-        this.onIndexChanged,
-        this.anchorOffset,
-        this.pinGroupTitleOffset});
+      this.fixedItemSize,
+      this.onIndexChanged,
+      this.anchorOffset,
+      this.pinGroupTitleOffset});
 
   /// The [ScrollController] of the [ScrollView]
   final ScrollController scrollController;
@@ -129,11 +129,13 @@ class AnchorScrollControllerHelper {
       tmpIndex = index;
     }
 
-    if(pinGroupTitleOffset != null) {
+    if (pinGroupTitleOffset != null) {
       final nextIndex = tmpIndex + 1;
       if (_itemMap.containsKey(nextIndex)) {
         final RevealedOffset? revealedOffset = _getOffsetToReveal(nextIndex);
-        if (revealedOffset != null && (revealedOffset.offset - pinGroupTitleOffset!) < scrollController.offset) {
+        if (revealedOffset != null &&
+            (revealedOffset.offset - pinGroupTitleOffset!) <
+                scrollController.offset) {
           tmpIndex = nextIndex;
         }
       }
