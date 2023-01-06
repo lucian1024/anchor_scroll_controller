@@ -28,3 +28,8 @@
 ## 0.4.1
 
 * Added anchorOffset property to add some offset to each anchor
+
+
+## 0.4.2
+
+* Added the pinGroupTitleOffset to apply to calculate current index
