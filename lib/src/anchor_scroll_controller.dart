@@ -29,6 +29,18 @@ class AnchorScrollControllerHelper {
   /// The offset to apply to calculate current index
   final double? pinGroupTitleOffset;
 
+  /// The list of added index listeners via [addIndexListener]
+  final List<IndexChanged> indexListeners = [];
+
+  /// Will be called every time the user scrolls to an element
+  void addIndexListener(IndexChanged indexListener) {
+    indexListeners.add(indexListener);
+  }
+
+  void removeIndexListener(IndexChanged indexListener) {
+    indexListeners.remove(indexListener);
+  }
+
   /// The map which stores the states of the current items in the viewport
   final Map<int, AnchorItemWrapperState> _itemMap = {};
 
@@ -60,9 +72,17 @@ class AnchorScrollControllerHelper {
         if (index != _currIndex) {
           _currIndex = index;
           onIndexChanged?.call(
+            _currIndex,
+            scrollController.position.userScrollDirection !=
+                ScrollDirection.idle,
+          );
+          for (var indexListener in indexListeners) {
+            indexListener.call(
               _currIndex,
               scrollController.position.userScrollDirection !=
-                  ScrollDirection.idle);
+                  ScrollDirection.idle,
+            );
+          }
         }
       }
     }
@@ -296,15 +316,17 @@ class AnchorScrollController extends ScrollController {
     this.anchorOffset,
     double? pinOffset,
   }) : super(
-            initialScrollOffset: initialScrollOffset,
-            keepScrollOffset: keepScrollOffset,
-            debugLabel: debugLabel) {
+          initialScrollOffset: initialScrollOffset,
+          keepScrollOffset: keepScrollOffset,
+          debugLabel: debugLabel,
+        ) {
     _helper = AnchorScrollControllerHelper(
-        scrollController: this,
-        fixedItemSize: fixedItemSize,
-        onIndexChanged: onIndexChanged,
-        anchorOffset: anchorOffset,
-        pinGroupTitleOffset: pinOffset);
+      scrollController: this,
+      fixedItemSize: fixedItemSize,
+      onIndexChanged: onIndexChanged,
+      anchorOffset: anchorOffset,
+      pinGroupTitleOffset: pinOffset,
+    );
   }
 
   final double? fixedItemSize;
@@ -314,6 +336,14 @@ class AnchorScrollController extends ScrollController {
   final double? anchorOffset;
 
   late final AnchorScrollControllerHelper _helper;
+
+  void addIndexListener(IndexChanged indexListener) {
+    _helper.addIndexListener(indexListener);
+  }
+
+  void removeIndexListener(IndexChanged indexListener) {
+    _helper.removeIndexListener(indexListener);
+  }
 
   void addItem(int index, AnchorItemWrapperState state) {
     _helper.addItem(index, state);
