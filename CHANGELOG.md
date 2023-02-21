@@ -33,3 +33,7 @@
 ## 0.4.2
 
 * Added the pinGroupTitleOffset to apply to calculate current index
+
+## 0.4.3
+
+* Fix [issue #7](https://github.com/lucian1024/anchor_scroll_controller/issues/7): Implemented addIndexListener and removeIndexListener
