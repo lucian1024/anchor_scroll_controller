@@ -80,11 +80,12 @@ class AnchorScrollViewWrapper extends InheritedWidget {
     Key? key,
   }) : super(key: key, child: child) {
     _helper = AnchorScrollControllerHelper(
-        scrollController: controller,
-        fixedItemSize: fixedItemSize,
-        onIndexChanged: onIndexChanged,
-        anchorOffset: anchorOffset,
-        pinGroupTitleOffset: pinGroupTitleOffset);
+      scrollController: controller,
+      fixedItemSize: fixedItemSize,
+      onIndexChanged: onIndexChanged,
+      anchorOffset: anchorOffset,
+      pinGroupTitleOffset: pinGroupTitleOffset,
+    );
     _scrollListener = () {
       _helper.notifyIndexChanged();
     };
@@ -108,6 +109,14 @@ class AnchorScrollViewWrapper extends InheritedWidget {
 
   void removeItem(int index) {
     _helper.removeItem(index);
+  }
+
+  void addIndexListener(IndexChanged indexListener) {
+    _helper.addIndexListener(indexListener);
+  }
+
+  void removeIndexListener(IndexChanged indexListener) {
+    _helper.removeIndexListener(indexListener);
   }
 
   static AnchorScrollViewWrapper? of(BuildContext context) {
@@ -136,10 +145,11 @@ class AnchorScrollViewWrapper extends InheritedWidget {
     controller.removeListener(_scrollListener);
   }
 
-  Future<void> scrollToIndex(
-      {required int index,
-      double scrollSpeed = 2,
-      Curve curve = Curves.linear}) async {
+  Future<void> scrollToIndex({
+    required int index,
+    double scrollSpeed = 2,
+    Curve curve = Curves.linear,
+  }) async {
     _helper.scrollToIndex(index: index, scrollSpeed: scrollSpeed, curve: curve);
   }
 

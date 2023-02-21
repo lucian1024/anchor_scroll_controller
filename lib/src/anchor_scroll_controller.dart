@@ -8,12 +8,13 @@ import 'anchor_scroll_wrapper.dart';
 typedef IndexChanged = void Function(int index, bool userScroll);
 
 class AnchorScrollControllerHelper {
-  AnchorScrollControllerHelper(
-      {required this.scrollController,
-      this.fixedItemSize,
-      this.onIndexChanged,
-      this.anchorOffset,
-      this.pinGroupTitleOffset});
+  AnchorScrollControllerHelper({
+    required this.scrollController,
+    this.fixedItemSize,
+    this.onIndexChanged,
+    this.anchorOffset,
+    this.pinGroupTitleOffset,
+  });
 
   /// The [ScrollController] of the [ScrollView]
   final ScrollController scrollController;
@@ -172,10 +173,11 @@ class AnchorScrollControllerHelper {
   /// @param index: the target index item to scroll to
   /// @param scrollSpeed: the scroll speed in unit offset/millisecond
   /// @param curve: the scroll animation
-  Future<void> scrollToIndex(
-      {required int index,
-      double scrollSpeed = 2,
-      Curve curve = Curves.linear}) async {
+  Future<void> scrollToIndex({
+    required int index,
+    double scrollSpeed = 2,
+    Curve curve = Curves.linear,
+  }) async {
     assert(scrollSpeed > 0);
 
     if (!scrollController.hasClients) {
@@ -259,8 +261,11 @@ class AnchorScrollControllerHelper {
 
   /// Scroll to the index item which is already in the viewport
   Future<void> _animateToIndexInViewport(
-      int index, double scrollSpeed, Curve curve,
-      {double alignment = 0}) async {
+    int index,
+    double scrollSpeed,
+    Curve curve, {
+    double alignment = 0,
+  }) async {
     final double? targetOffset = _getScrollOffset(index, alignment: alignment);
     if (targetOffset == null) {
       return;
@@ -275,7 +280,10 @@ class AnchorScrollControllerHelper {
   }
 
   /// Get the scroll offset for the target index
-  double? _getScrollOffset(int index, {double alignment = 0}) {
+  double? _getScrollOffset(
+    int index, {
+    double alignment = 0,
+  }) {
     final revealOffset = _getOffsetToReveal(index, alignment: alignment);
     if (revealOffset == null) {
       return null;
@@ -286,7 +294,10 @@ class AnchorScrollControllerHelper {
   }
 
   /// Get the [RevealedOffset] to reveal the target index
-  RevealedOffset? _getOffsetToReveal(int index, {double alignment = 0}) {
+  RevealedOffset? _getOffsetToReveal(
+    int index, {
+    double alignment = 0,
+  }) {
     RevealedOffset? offset;
 
     final context = _itemMap[index]?.context;
@@ -360,10 +371,11 @@ class AnchorScrollController extends ScrollController {
     super.notifyListeners();
   }
 
-  Future<void> scrollToIndex(
-      {required int index,
-      double scrollSpeed = 2,
-      Curve curve = Curves.linear}) async {
+  Future<void> scrollToIndex({
+    required int index,
+    double scrollSpeed = 2,
+    Curve curve = Curves.linear,
+  }) async {
     await _helper.scrollToIndex(
         index: index, scrollSpeed: scrollSpeed, curve: curve);
   }
