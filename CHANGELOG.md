@@ -37,3 +37,7 @@
 ## 0.4.3
 
 * Fix [issue #7](https://github.com/lucian1024/anchor_scroll_controller/issues/7): Implemented addIndexListener and removeIndexListener
+
+## 0.4.4
+
+* Bugfix: sometimes can not scroll to the index for pinned header list.

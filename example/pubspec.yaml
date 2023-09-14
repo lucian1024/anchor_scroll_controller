@@ -26,7 +26,7 @@ dependencies:
   anchor_scroll_controller:
     path: ../
   flutter_sticky_header: 0.6.0
-  modal_bottom_sheet: 2.0.1
+  modal_bottom_sheet: ^3.0.0-pre
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
